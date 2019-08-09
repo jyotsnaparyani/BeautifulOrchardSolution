@@ -1,0 +1,66 @@
+ int GetNApples(int[] A, int K,int L)
+        {
+            int finalK = 0, currentK = 0, currentleftL=0, currentrightL=0, finalleftL = 0, finalrightL = 0, finalL = 0, result = 0, firstK=0,lastK=0;
+            int n = A.Length;
+            if(K+L > n)
+            {
+                return -1;
+            }
+            else
+            {
+                for(int i = 0; i <= n-K; i++)
+                {
+                    for(int j = i; j <= i + (K - 1); j++)
+                    {
+                        currentK += A[j];
+                    }
+                    if(finalK ==0 || finalK< currentK)
+                    {
+                        finalK = currentK;
+                        firstK = i;
+                        lastK = i + (K - 1);
+                    }
+                    currentK = 0;
+                }
+                if (firstK >= L)
+                {
+                    for (int i = 0; i < firstK - 1;i++)
+                    {
+                        for(int j = i; j <= i + (L - 1); j++)
+                        {
+                            currentleftL += A[j];
+                        }
+                        if(finalleftL < currentleftL)
+                        {
+                            finalleftL = currentleftL;
+                        }
+                        currentleftL = 0;
+                    }
+                }
+                if(lastK+L <= n - 1)
+                {
+                    for (int i = lastK+1; i <= n -L; i++)
+                    {
+                        for (int j = i; j <= i + (L - 1); j++)
+                        {
+                            currentrightL += A[j];
+                        }
+                        if (finalleftL < currentrightL)
+                        {
+                            finalrightL = currentrightL;
+                        }
+                        currentrightL = 0;
+                    }
+                }
+                if(finalleftL ==0 && finalrightL == 0)
+                {
+                    return -1;
+                }
+                else
+                {
+                    finalL = Math.Max(finalleftL, finalrightL);
+                    result = finalK + finalL;
+                }
+            }
+            return result;
+        }
